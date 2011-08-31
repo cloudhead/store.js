@@ -13,21 +13,21 @@ var store = (function () {
 
     if (localStorageName in win && win[localStorageName]) {
         storage    = win[localStorageName];
-        api.set    = function (key, val) { storage.setItem(key, val) };
-        api.get    = function (key)      { return storage.getItem(key) };
-        api.remove = function (key)      { storage.removeItem(key) };
-        api.clear  = function ()         { storage.clear() };
+        api.set    = function (key, val) { storage.setItem(key, val); };
+        api.get    = function (key)      { return storage.getItem(key); };
+        api.remove = function (key)      { storage.removeItem(key); };
+        api.clear  = function ()         { storage.clear(); };
 
     } else if (globalStorageName in win && win[globalStorageName]) {
         storage    = win[globalStorageName][win.location.hostname];
-        api.set    = function (key, val) { storage[key] = val };
-        api.get    = function (key)      { return storage[key] && storage[key].value };
-        api.remove = function (key)      { delete storage[key] };
-        api.clear  = function ()         { for (var key in storage ) { delete storage[key] } };
+        api.set    = function (key, val) { storage[key] = val; };
+        api.get    = function (key)      { return storage[key] && storage[key].value; };
+        api.remove = function (key)      { delete storage[key]; };
+        api.clear  = function ()         { for (var key in storage ) { delete storage[key]; } };
 
     } else if (doc.documentElement.addBehavior) {
         function getStorage() {
-            if (storage) { return storage }
+            if (storage) { return storage; }
             storage = doc.body.appendChild(doc.createElement('div'));
             storage.style.display = 'none';
             // See http://msdn.microsoft.com/en-us/library/ms531081(v=VS.85).aspx
@@ -49,16 +49,16 @@ var store = (function () {
             var storage = getStorage();
             storage.removeAttribute(key);
             storage.save(localStorageName);
-        }
+        };
         api.clear = function () {
             var storage = getStorage();
-            var attributes = storage.XMLDocument.documentElement.attributes;;
+            var attributes = storage.XMLDocument.documentElement.attributes;
             storage.load(localStorageName);
             for (var i=0, attr; attr = attributes[i]; i++) {
                 storage.removeAttribute(attr.name);
             }
             storage.save(localStorageName);
-        }
+        };
     }
     return api;
 })();
